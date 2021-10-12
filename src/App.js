@@ -1,12 +1,12 @@
 import './App.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToRank } from './reducers'
+import { addToRank, setInitialRank } from './reducers'
 
 import useApplicationData from './hooks/useApplicationData';
 
 function App() {
 
-  const { data } = useApplicationData()
+  const { data, loading, error } = useApplicationData()
 
   const state = useSelector(state => ({
     breed1Total: state.breed1Total,
@@ -16,6 +16,10 @@ function App() {
   }))
 
   const dispatch = useDispatch();
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error!</div>;
+  if (!data) return null;
 
   return (
     <div className="App">
