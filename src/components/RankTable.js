@@ -24,7 +24,7 @@ function RankTable({ columns, data }) {
         </thead>
         <Droppable droppableId={columns[1].Header} >
           {(provided, snapshot) => (
-            <tbody ref={provided.innerRef} {...provided.droppableProps} isDraggingOver={snapshot.isDraggingOver}>
+            <tbody ref={provided.innerRef} {...provided.droppableProps} >
               {rows.map((row, i) => {
                 prepareRow(row);
                 return (
@@ -39,7 +39,6 @@ function RankTable({ columns, data }) {
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
-                        isDragging={snapshot.isDragging}
                       >
                         {row.cells.map(cell => (
                           <td {...cell.getCellProps()}>
