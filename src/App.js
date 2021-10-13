@@ -1,8 +1,8 @@
-import './App.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToRank, setInitialRank } from './reducers'
 
 import useApplicationData from './hooks/useApplicationData';
+import MainContent from './components/MainContent';
 
 function App() {
 
@@ -23,9 +23,7 @@ function App() {
 
   return (
     <div className="App">
-      {JSON.stringify(state)}
-      {console.log(data.message)}
-      <button onClick={() => dispatch(addToRank())}></button>
+      <MainContent state={state} />
     </div>
   );
 }
