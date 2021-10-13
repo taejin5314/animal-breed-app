@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/animal-breed-app/static/css/main.6dea0f05.chunk.css",
+    "main.js": "/animal-breed-app/static/js/main.4ea6b622.chunk.js",
+    "main.js.map": "/animal-breed-app/static/js/main.4ea6b622.chunk.js.map",
+    "runtime-main.js": "/animal-breed-app/static/js/runtime-main.38ed078f.js",
+    "runtime-main.js.map": "/animal-breed-app/static/js/runtime-main.38ed078f.js.map",
+    "static/js/2.aeedbbd6.chunk.js": "/animal-breed-app/static/js/2.aeedbbd6.chunk.js",
+    "static/js/2.aeedbbd6.chunk.js.map": "/animal-breed-app/static/js/2.aeedbbd6.chunk.js.map",
+    "static/js/3.d230777c.chunk.js": "/animal-breed-app/static/js/3.d230777c.chunk.js",
+    "static/js/3.d230777c.chunk.js.map": "/animal-breed-app/static/js/3.d230777c.chunk.js.map",
+    "index.html": "/animal-breed-app/index.html",
+    "static/css/main.6dea0f05.chunk.css.map": "/animal-breed-app/static/css/main.6dea0f05.chunk.css.map",
+    "static/js/2.aeedbbd6.chunk.js.LICENSE.txt": "/animal-breed-app/static/js/2.aeedbbd6.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.38ed078f.js",
+    "static/js/2.aeedbbd6.chunk.js",
+    "static/css/main.6dea0f05.chunk.css",
+    "static/js/main.4ea6b622.chunk.js"
+  ]
+}
