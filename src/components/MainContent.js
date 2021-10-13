@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import makeData from '../helpers/makeData'
 import RankTable from './RankTable'
 import { useDispatch } from 'react-redux';
-import { dndInSameColumn, dndInOtherColumn } from '../reducers';
+import { dragAndDrop } from '../reducers';
+import { DragDropContext } from 'react-beautiful-dnd';
 
 const Styles = styled.div`
   padding: 1rem;
@@ -68,26 +69,23 @@ function MainContent({ state }) {
   const [dataOne, setDataOne] = useState(makeData(state.breed1Rank))
   const [dataTwo, setDataTwo] = useState(makeData(state.breed2Rank))
 
-  const reorderData = (order) => {
-    const { startIndex, startColumn, endIndex, endColumn } = order
-
-    // drag and drop within same table
-    if (startColumn === endColumn) {
-      dispatch(dndInSameColumn(order))
-      if (startColumn === 'Breed 1') {
-        setDataOne(makeData(state.breed1Rank))
-      } else if (startColumn === 'Breed 2') {
-        setDataTwo(makeData(state.breed2Rank))
-      }
-    } else {
-      dispatch(dndInOtherColumn(order))
+  const handleDragEnd = result => {
+    const { source, destination } = result;
+    if (!destination) {
+      return;
     }
+    dispatch(dragAndDrop({ startIndex: source.index, startColumn: source.droppableId, endIndex: destination.index, endColumn: destination.droppableId }));
+
+    setDataOne(makeData(state.breed1Rank));
+    setDataTwo(makeData(state.breed2Rank));
   }
 
   return (
     <Styles>
-      <RankTable columns={columnsOne} data={dataOne} reorderData={reorderData} />
-      <RankTable columns={columnsTwo} data={dataTwo} reorderData={reorderData} />
+      <DragDropContext onDragEnd={handleDragEnd}>
+        <RankTable columns={columnsOne} data={dataOne} />
+        <RankTable columns={columnsTwo} data={dataTwo} />
+      </DragDropContext>
     </Styles>
   )
 }

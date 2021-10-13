@@ -1,4 +1,5 @@
 import createRank from "../helpers/createRank";
+import reorderData from "../helpers/reorderData";
 
 /* State that controlled by redux */
 const initialState = {
@@ -10,15 +11,12 @@ const initialState = {
 
 /* Action types */
 const SET_INITIAL_RANK = 'SET_INITIAL_RANK';
-const DND_IN_SAME_COLUMN = 'DND_IN_SAME_COLUMN';
-const DND_IN_OTHER_COLUMN = 'DND_IN_OTHER_COLUMN';
+const DRAG_AND_DROP = 'DRAG_AND_DROP';
 
 /* Action function definitions */
 export const setInitialRank = (data) => ({ type: SET_INITIAL_RANK, payload: data })
 
-export const dndInSameColumn = (order) => ({ type: DND_IN_SAME_COLUMN, payload: order })
-
-export const dndInOtherColumn = (order) => ({ type: DND_IN_OTHER_COLUMN, payload: order })
+export const dragAndDrop = (order) => ({ type: DRAG_AND_DROP, payload: order })
 
 /* Reducer */
 export default function reducer(state = initialState, action) {
@@ -32,52 +30,12 @@ export default function reducer(state = initialState, action) {
         breed2Total: 10,
         breed2Rank: rank2
       }
-    case DND_IN_SAME_COLUMN:
+    case DRAG_AND_DROP:
       const { startIndex, startColumn, endIndex, endColumn } = action.payload;
-      if (startColumn === 'Breed 1') {
-        if (startIndex > endIndex) {
-          const temp = state.breed1Rank[`rank${startIndex + 1}`];
-          for (let i = startIndex + 1; i > endIndex + 1; i--) {
-            console.log(i)
-            state.breed1Rank[`rank${i}`] = state.breed1Rank[`rank${i - 1}`];
-          }
-          state.breed1Rank[`rank${endIndex + 1}`] = temp;
-        } else if (startIndex < endIndex) {
-          const temp = state.breed1Rank[`rank${startIndex + 1}`];
-          for (let i = startIndex + 1; i < endIndex + 1; i++) {
-            console.log(i)
-            state.breed1Rank[`rank${i}`] = state.breed1Rank[`rank${i + 1}`];
-          }
-          state.breed1Rank[`rank${endIndex + 1}`] = temp;
-        }
-        return {
-          ...state,
-        };
-      } else if (startColumn === 'Breed 2') {
-        if (startIndex > endIndex) {
-          const temp = state.breed2Rank[`rank${startIndex + 1}`];
-          for (let i = startIndex + 1; i > endIndex + 1; i--) {
-            console.log(i)
-            state.breed2Rank[`rank${i}`] = state.breed2Rank[`rank${i - 1}`];
-          }
-          state.breed2Rank[`rank${endIndex + 1}`] = temp;
-        } else if (startIndex < endIndex) {
-          const temp = state.breed2Rank[`rank${startIndex + 1}`];
-          for (let i = startIndex + 1; i < endIndex + 1; i++) {
-            console.log(i)
-            state.breed2Rank[`rank${i}`] = state.breed2Rank[`rank${i + 1}`];
-          }
-          state.breed2Rank[`rank${endIndex + 1}`] = temp;
-        }
-        return {
-          ...state,
-        };
-      }
-    case DND_IN_OTHER_COLUMN:
+      const newState = reorderData(state, startIndex, startColumn, endIndex, endColumn);
       return {
-        ...state,
-        rank1: 'remove from list'
-      }
+        ...newState,
+      };
     default:
       return state;
   }
