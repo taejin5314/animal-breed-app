@@ -10,15 +10,15 @@ const initialState = {
 
 /* Action types */
 const SET_INITIAL_RANK = 'SET_INITIAL_RANK';
-const ADD_TO_RANK = 'ADD_TO_RANK';
-const REMOVE_FROM_RANK = 'REMOVE_FROM_RANK';
+const DND_IN_SAME_COLUMN = 'DND_IN_SAME_COLUMN';
+const DND_IN_OTHER_COLUMN = 'DND_IN_OTHER_COLUMN';
 
 /* Action function definitions */
 export const setInitialRank = (data) => ({ type: SET_INITIAL_RANK, payload: data })
 
-export const addToRank = () => ({ type: ADD_TO_RANK })
+export const dndInSameColumn = (order) => ({ type: DND_IN_SAME_COLUMN, payload: order })
 
-export const removeFromRank = () => ({ type: REMOVE_FROM_RANK })
+export const dndInOtherColumn = (order) => ({ type: DND_IN_OTHER_COLUMN, payload: order })
 
 /* Reducer */
 export default function reducer(state = initialState, action) {
@@ -32,12 +32,48 @@ export default function reducer(state = initialState, action) {
         breed2Total: 10,
         breed2Rank: rank2
       }
-    case ADD_TO_RANK:
-      return {
-        ...state,
-        breed1Total: state.breed1Total + 1
-      };
-    case REMOVE_FROM_RANK:
+    case DND_IN_SAME_COLUMN:
+      const { startIndex, startColumn, endIndex, endColumn } = action.payload;
+      if (startColumn === 'Breed 1') {
+        if (startIndex > endIndex) {
+          const temp = state.breed1Rank[`rank${startIndex + 1}`];
+          for (let i = startIndex + 1; i > endIndex + 1; i--) {
+            console.log(i)
+            state.breed1Rank[`rank${i}`] = state.breed1Rank[`rank${i - 1}`];
+          }
+          state.breed1Rank[`rank${endIndex + 1}`] = temp;
+        } else if (startIndex < endIndex) {
+          const temp = state.breed1Rank[`rank${startIndex + 1}`];
+          for (let i = startIndex + 1; i < endIndex + 1; i++) {
+            console.log(i)
+            state.breed1Rank[`rank${i}`] = state.breed1Rank[`rank${i + 1}`];
+          }
+          state.breed1Rank[`rank${endIndex + 1}`] = temp;
+        }
+        return {
+          ...state,
+        };
+      } else if (startColumn === 'Breed 2') {
+        if (startIndex > endIndex) {
+          const temp = state.breed2Rank[`rank${startIndex + 1}`];
+          for (let i = startIndex + 1; i > endIndex + 1; i--) {
+            console.log(i)
+            state.breed2Rank[`rank${i}`] = state.breed2Rank[`rank${i - 1}`];
+          }
+          state.breed2Rank[`rank${endIndex + 1}`] = temp;
+        } else if (startIndex < endIndex) {
+          const temp = state.breed2Rank[`rank${startIndex + 1}`];
+          for (let i = startIndex + 1; i < endIndex + 1; i++) {
+            console.log(i)
+            state.breed2Rank[`rank${i}`] = state.breed2Rank[`rank${i + 1}`];
+          }
+          state.breed2Rank[`rank${endIndex + 1}`] = temp;
+        }
+        return {
+          ...state,
+        };
+      }
+    case DND_IN_OTHER_COLUMN:
       return {
         ...state,
         rank1: 'remove from list'

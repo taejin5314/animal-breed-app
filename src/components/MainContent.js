@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import styled from 'styled-components';
 import makeData from '../helpers/makeData'
 import RankTable from './RankTable'
+import { useDispatch } from 'react-redux';
+import { dndInSameColumn, dndInOtherColumn } from '../reducers';
 
 const Styles = styled.div`
   padding: 1rem;
   display: flex;
+  justify-content: center;
 
   table {
     border-spacing: 0;
     border: 1px solid black;
+    margin: 100px;
 
     tr {
       :last-child {
@@ -34,7 +38,9 @@ const Styles = styled.div`
 `;
 
 function MainContent({ state }) {
-  const columnsOne = React.useMemo(() =>
+  const dispatch = useDispatch();
+
+  const columnsOne = useMemo(() =>
     [
       {
         Header: "Rank",
@@ -46,7 +52,7 @@ function MainContent({ state }) {
       }
     ]
   )
-  const columnsTwo = React.useMemo(() =>
+  const columnsTwo = useMemo(() =>
     [
       {
         Header: "Rank",
@@ -59,14 +65,29 @@ function MainContent({ state }) {
     ],
     []
   )
+  const [dataOne, setDataOne] = useState(makeData(state.breed1Rank))
+  const [dataTwo, setDataTwo] = useState(makeData(state.breed2Rank))
 
-  const dataOne = React.useMemo(() => makeData(state.breed1Rank), [])
-  const dataTwo = React.useMemo(() => makeData(state.breed2Rank), [])
+  const reorderData = (order) => {
+    const { startIndex, startColumn, endIndex, endColumn } = order
+
+    // drag and drop within same table
+    if (startColumn === endColumn) {
+      dispatch(dndInSameColumn(order))
+      if (startColumn === 'Breed 1') {
+        setDataOne(makeData(state.breed1Rank))
+      } else if (startColumn === 'Breed 2') {
+        setDataTwo(makeData(state.breed2Rank))
+      }
+    } else {
+      dispatch(dndInOtherColumn(order))
+    }
+  }
 
   return (
     <Styles>
-      <RankTable columns={columnsOne} data={dataOne} />
-      <RankTable columns={columnsTwo} data={dataTwo} />
+      <RankTable columns={columnsOne} data={dataOne} reorderData={reorderData} />
+      <RankTable columns={columnsTwo} data={dataTwo} reorderData={reorderData} />
     </Styles>
   )
 }
