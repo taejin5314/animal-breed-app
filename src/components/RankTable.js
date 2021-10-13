@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTable } from 'react-table';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { Droppable, Draggable } from 'react-beautiful-dnd';
 
 function RankTable({ columns, data }) {
 

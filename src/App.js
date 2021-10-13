@@ -1,6 +1,30 @@
-import { useSelector, useDispatch } from 'react-redux';
+// package
+import styled from 'styled-components';
+
+// hook
 import useApplicationData from './hooks/useApplicationData';
+
+// component
 import MainContent from './components/MainContent';
+import ExportButton from './components/ExportButton';
+import { useSelector } from 'react-redux';
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const HeaderContainer = styled.div`
+  position: relative;
+`;
+
+const Header = styled.div`
+  margin: 50px 0;
+  font-weight: 700;
+  font-size: 2rem;
+`;
 
 function App() {
 
@@ -18,9 +42,13 @@ function App() {
   if (!data) return null;
 
   return (
-    <div className="App">
+    <Container>
+      <HeaderContainer>
+        <Header>Breed Rank</Header>
+        <ExportButton state={state} />
+      </HeaderContainer>
       <MainContent state={state} />
-    </div>
+    </Container>
   );
 }
 

@@ -34,8 +34,12 @@ export default function reducer(state = initialState, action) {
       const { startIndex, startColumn, endIndex, endColumn } = action.payload;
       const newState = reorderData(state, startIndex, startColumn, endIndex, endColumn);
       return {
-        ...newState,
-      };
+        ...state,
+        breed1Total: newState.breed1Total,
+        breed1Rank: newState.breed1Rank,
+        breed2Total: newState.breed2Total,
+        breed2Rank: newState.breed2Rank
+      }
     default:
       return state;
   }

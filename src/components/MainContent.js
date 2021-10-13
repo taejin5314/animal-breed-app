@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import styled from 'styled-components';
 import makeData from '../helpers/makeData'
 import RankTable from './RankTable'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { dragAndDrop } from '../reducers';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -14,7 +14,9 @@ const Styles = styled.div`
   table {
     border-spacing: 0;
     border: 1px solid black;
-    margin: 100px;
+    margin: 0 100px;
+    height: 100%;
+    width: 250px;
 
     tr {
       :last-child {
@@ -30,10 +32,21 @@ const Styles = styled.div`
       padding: 0.5rem;
       border-bottom: 1px solid black;
       border-right: 1px solid black;
+      text-align: center;
+      width: 40px;
 
       :last-child {
         border-right: 0;
+        width: 210px;
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+
+    table {
+      margin-bottom: 50px;
     }
   }
 `;
@@ -74,7 +87,7 @@ function MainContent({ state }) {
     if (!destination) {
       return;
     }
-    dispatch(dragAndDrop({ startIndex: source.index, startColumn: source.droppableId, endIndex: destination.index, endColumn: destination.droppableId }));
+    dispatch(dragAndDrop({ startIndex: source.index, startColumn: source.droppableId, endIndex: destination.index, endColumn: destination.droppableId }))
 
     setDataOne(makeData(state.breed1Rank));
     setDataTwo(makeData(state.breed2Rank));
