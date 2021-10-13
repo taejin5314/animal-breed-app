@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import styled from 'styled-components';
 import makeData from '../helpers/makeData'
 import RankTable from './RankTable'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { dragAndDrop } from '../reducers';
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -51,6 +51,7 @@ const Styles = styled.div`
   }
 `;
 
+// MainContent contains two tables(breed 1 rank, breed 2 rank)
 function MainContent({ state }) {
   const dispatch = useDispatch();
 
@@ -82,12 +83,33 @@ function MainContent({ state }) {
   const [dataOne, setDataOne] = useState(makeData(state.breed1Rank))
   const [dataTwo, setDataTwo] = useState(makeData(state.breed2Rank))
 
+  // execute when drag and drop is over
   const handleDragEnd = result => {
     const { source, destination } = result;
+
+    // if user drop in not droppable area
     if (!destination) {
       return;
     }
-    dispatch(dragAndDrop({ startIndex: source.index, startColumn: source.droppableId, endIndex: destination.index, endColumn: destination.droppableId }))
+
+    const startIndex = source.index;
+    const startColumn = source.droppableId;
+    const endIndex = destination.index;
+    const endColumn = destination.droppableId;
+
+    // each table needs at least one row and maximum 19 rows
+    if (startColumn === 'Breed 1' && startColumn !== endColumn) {
+      if (Object.keys(state.breed1Rank).length === 1) {
+        alert("Woof Invalid Action Woof");
+        return;
+      }
+    } else if (startColumn === 'Breed 2' && startColumn !== endColumn) {
+      if (Object.keys(state.breed2Rank).length === 1) {
+        alert("Woof Invalid Action Woof");
+        return;
+      }
+    }
+    dispatch(dragAndDrop({ startIndex, startColumn, endIndex, endColumn }))
 
     setDataOne(makeData(state.breed1Rank));
     setDataTwo(makeData(state.breed2Rank));

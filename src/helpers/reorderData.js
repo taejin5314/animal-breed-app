@@ -1,6 +1,7 @@
 export default function reorderData(state, startIndex, startColumn, endIndex, endColumn) {
+  // when drag and drop occurs in the same column
   if (startColumn === endColumn) {
-    if (startColumn === 'Breed 1') {
+    if (startColumn === 'Breed 1') { // in case drag and drop occurs in breed 1 table
       if (startIndex > endIndex) {
         const temp = state.breed1Rank[`rank${startIndex + 1}`];
         for (let i = startIndex + 1; i > endIndex + 1; i--) {
@@ -15,7 +16,7 @@ export default function reorderData(state, startIndex, startColumn, endIndex, en
         state.breed1Rank[`rank${endIndex + 1}`] = temp;
       }
 
-    } else if (startColumn === 'Breed 2') {
+    } else if (startColumn === 'Breed 2') { // in case drag and drop occurs in breed 2 table
       if (startIndex > endIndex) {
         const temp = state.breed2Rank[`rank${startIndex + 1}`];
         for (let i = startIndex + 1; i > endIndex + 1; i--) {
@@ -50,7 +51,7 @@ export default function reorderData(state, startIndex, startColumn, endIndex, en
 
       state.breed2Rank[`rank${endIndex + 1}`] = temp;
 
-    } else if (startColumn === 'Breed 2') {
+    } else if (startColumn === 'Breed 2') { // in case drag from breed 2 table and drop to breed 1 table
       state.breed2Total--;
       const temp = state.breed2Rank[`rank${startIndex + 1}`];
 

@@ -7,8 +7,8 @@ const Button = styled.button`
   right: -100px;
 `;
 
+// export button exports the json file of breed data and shows it in blank tab of the browser
 function ExportButton({ state }) {
-
 
   const handleClick = () => {
     const dataStr = `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify({ "dogBreeds": state }, null, '\t'))}`
@@ -24,11 +24,9 @@ function ExportButton({ state }) {
   }
 
   return (
-    <>
-      <Button onClick={handleClick}>
-        Export!
-      </Button>
-    </>
+    <Button onClick={handleClick}>
+      Export!
+    </Button>
   )
 }
 

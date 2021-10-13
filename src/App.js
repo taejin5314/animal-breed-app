@@ -1,13 +1,13 @@
 // package
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
 
-// hook
+// custom hook
 import useApplicationData from './hooks/useApplicationData';
 
-// component
+// components
 import MainContent from './components/MainContent';
 import ExportButton from './components/ExportButton';
-import { useSelector } from 'react-redux';
 
 const Container = styled.div`
   display: flex;

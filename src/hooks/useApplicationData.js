@@ -10,6 +10,7 @@ export default function useApplicationData() {
 
   const dispatch = useDispatch();
 
+  // fetch api from the link when the component is mounted
   useEffect(() => {
     const fetchAPI = async () => {
       try {

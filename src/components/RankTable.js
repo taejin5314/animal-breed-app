@@ -2,6 +2,7 @@ import React from 'react';
 import { useTable } from 'react-table';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 
+// Table component which contains rank number and breed name
 function RankTable({ columns, data }) {
 
   const table = useTable({

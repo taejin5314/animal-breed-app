@@ -1,4 +1,4 @@
-/* Create 2 breed rank lists */
+/* Create 2 breed rank lists by using Math.random() numbers */
 export default function createRank(data) {
   const breedArray = [];
   const rank1 = {};
